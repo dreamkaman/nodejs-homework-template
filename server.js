@@ -2,9 +2,9 @@ const app = require("./app");
 
 const mongoose = require("mongoose");
 
-const dotenv = require("dotenv");
+// const dotenv = require("dotenv");
 
-dotenv.config();
+// dotenv.config();
 
 // const DB_HOST =
 //   "mongodb+srv://Vlad:eKnFNsie8chkaUD@cluster0.u67sh.mongodb.net/db-contacts?retryWrites=true&w=majority";
@@ -15,6 +15,7 @@ const { DB_HOST, PORT = 3000 } = process.env;
 mongoose
   .connect(DB_HOST)
   .then(() => {
+    // app.listen(PORT);
     app.listen(PORT, () => {
       console.log("Database connection successful");
     });
