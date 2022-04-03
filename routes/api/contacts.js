@@ -4,7 +4,7 @@ const createError = require("http-errors");
 
 const router = express.Router();
 
-// const contactsActions = require("../../models/contacts");
+ const Contact = require("../../models/contact");
 
 const contactsAddSchema = Joi.object({
   name: Joi.string().required(),
@@ -20,14 +20,14 @@ const contactUpdateSchema = Joi.object({
   .min(1)
   .max(3);
 
-// router.get("/", async (req, res, next) => {
-//   try {
-//     const result = await contactsActions.listContacts();
-//     res.json(result);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+router.get("/", async (req, res, next) => {
+  try {
+    const result = await Contact.find();
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // router.get("/:contactId", async (req, res, next) => {
 //   try {
@@ -44,21 +44,21 @@ const contactUpdateSchema = Joi.object({
 //   }
 // });
 
-// router.post("/", async (req, res, next) => {
-//   try {
-//     const { error } = contactsAddSchema.validate(req.body);
+router.post("/", async (req, res, next) => {
+  try {
+    const { error } = contactsAddSchema.validate(req.body);
 
-//     if (error) {
-//       throw createError(400, "missing required name field");
-//     }
+    if (error) {
+      throw createError(400, "missing required name field");
+    }
 
-//     const result = await contactsActions.addContact(req.body);
+    const result = await Contact.create(req.body);
 
-//     res.status(201).json(result);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+    res.status(201).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // router.delete("/:contactId", async (req, res, next) => {
 //   try {

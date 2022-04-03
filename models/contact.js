@@ -18,6 +18,6 @@ const contactSchema = Schema({
     },
   });
 
-  const Contact = model("contact", contactSchema);
+  const Contact = model("contact", contactSchema);//название - существительное в единственном числе с большой буквы
 
   module.exports = Contact;
