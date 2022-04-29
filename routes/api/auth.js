@@ -55,6 +55,7 @@ router.post("/login", async (req, res, next) => {
         const { email, password } = req.body;
 
         const user = await User.findOne({ email });
+        
         if (!user) {
             throw createError(401, "Not authorized");
         };
