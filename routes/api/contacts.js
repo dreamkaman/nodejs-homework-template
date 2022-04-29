@@ -4,9 +4,9 @@ const createError = require("http-errors");
 
 const router = express.Router();
 
- const {Contact,schemas} = require("../../models/contact");
+const { Contact, schemas } = require("../../models/contact");
 
-const {contactsAddSchema,contactUpdateSchema,contactUpdateFavoriteSchema} = schemas;
+const { contactsAddSchema, contactUpdateSchema, contactUpdateFavoriteSchema } = schemas;
 
 router.get("/", async (req, res, next) => {
   try {
@@ -28,8 +28,8 @@ router.get("/:contactId", async (req, res, next) => {
     }
     res.json(result);
   } catch (error) {
-    if(error.message.includes("Cast to ObjectId failed")){
-      error.status=404;
+    if (error.message.includes("Cast to ObjectId failed")) {
+      error.status = 404;
     }
     next(error);
   }
@@ -47,8 +47,8 @@ router.post("/", async (req, res, next) => {
 
     res.status(201).json(result);
   } catch (error) {
-    if (error.message.includes="validation failed"){
-      error.status=400;
+    if (error.message.includes = "validation failed") {
+      error.status = 400;
     }
     next(error);
   }
@@ -84,7 +84,7 @@ router.put("/:contactId", async (req, res, next) => {
       throw createError(400, "missing fields");
     }
 
-    const result = await Contact.findByIdAndUpdate(contactId, body,{new:true});
+    const result = await Contact.findByIdAndUpdate(contactId, body, { new: true });
     res.status(200).json(result);
   } catch (error) {
     next(error);
@@ -105,7 +105,7 @@ router.patch("/:contactId/favorite", async (req, res, next) => {
       throw createError(400, "missing fields");
     }
 
-    const result = await Contact.findByIdAndUpdate(contactId, body,{new:true});
+    const result = await Contact.findByIdAndUpdate(contactId, body, { new: true });
     res.status(200).json(result);
   } catch (error) {
     next(error);
