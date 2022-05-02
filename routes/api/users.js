@@ -2,16 +2,22 @@ const express = require("express");
 
 const router = express.Router();
 
-const { authenticate } = require("../../middlewares");
+const { User } = require("../../models/user");
 
-// console.log(authenticate);
+const { authenticate } = require("../../middlewares/index");
 
-// router.get("/current", authenticate, async (req, res, next) => {
-    router.get("/current", async (req, res, next) => {
-    try {
-        // console.log(req.headers.authorization);
-    } catch (error) {
-        next(error);
-    }
-})
+router.get("/current", authenticate, async (req, res, next) => {
+    res.json({
+        email: req.user.email,
+    });
+    next();
+});
+
+router.get("/logout", authenticate, async (req, res, next) => {
+        const { id } = req.user;
+        await User.findByIdAndUpdate(id, { token: null });
+        res.status(204).send();
+});
+
+
 module.exports = router;
