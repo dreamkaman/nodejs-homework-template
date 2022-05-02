@@ -30,10 +30,8 @@ const userSchema = Schema({
 
 const registerJoiSchema = Joi.object({
     email: Joi.string().pattern(emailRegexp).required(),
-    // email: Joi.string().email().required(),
     password: Joi.string().required(),
     subscription: Joi.valid("starter", "pro", "business"),
-    // subscription: Joi.string(),
     token: Joi.string()
 });
 

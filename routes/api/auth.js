@@ -55,7 +55,7 @@ router.post("/login", async (req, res, next) => {
         const { email, password } = req.body;
 
         const user = await User.findOne({ email });
-        
+
         if (!user) {
             throw createError(401, "Not authorized");
         };
@@ -69,7 +69,10 @@ router.post("/login", async (req, res, next) => {
             id: user._id,
         }
 
-        const token = jwt.sign(payload,SECRET_KEY,{expiresIn:"1h"});
+        const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+
+        await User.findByIdAndUpdate(user._id, { token });
+
         res.status(200).json({
             token,
             user: {
@@ -81,6 +84,9 @@ router.post("/login", async (req, res, next) => {
     } catch (error) {
         next(error)
     };
-})
+});
+
+
+
 
 module.exports = router;
